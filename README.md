@@ -1,1 +1,1 @@
-# mscs-gui
+# Minecraft Server Control GUI
