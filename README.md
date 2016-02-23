@@ -4,6 +4,8 @@
 * [Overview](#overview)
 * [Prerequisites for installation](#prerequisites-for-installation)
 * [Installation](#installation)
+  * [Download](#download)
+  * [Configuration](#configuration)
 * [Getting started guide](#getting-started-guide)
 * [License](LICENSE)
 
@@ -23,6 +25,17 @@ Since the GUI is web based, you will need to have a web server installed and wor
 
 
 ## Installation
+
+### Download
+
+
+### Configuration
+
+
+#### Apache
+
+
+#### Permissions
 
 
 ## Getting started guide
