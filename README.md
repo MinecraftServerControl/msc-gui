@@ -5,7 +5,7 @@
 * [Prerequisites for installation](#prerequisites-for-installation)
 * [Installation](#installation)
 * [Getting started guide](#getting-started-guide)
-* [License](#license)
+* [License](LICENSE)
 
 
 ## Overview
@@ -23,4 +23,4 @@ Minecraft Server Control GUI (mscGUI) is a new web-based interface to the [Minec
 
 ## License
 
-See [LICENSE](#license)
+See [LICENSE](LICENSE)
