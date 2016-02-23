@@ -45,6 +45,25 @@ more options here.
 #### Apache
 
 
+```
+<VirtualHost *:80>
+    ServerName minecraft.server.com
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www
+
+    Alias /gui /var/www/gui
+    <Directory "/var/www/gui">
+        Order Allow,Deny
+        Allow from all
+        AllowOverride None
+        AddHandler cgi-script .pl
+        Options +ExecCGI -MultiViews -Indexes -Includes +FollowSymLinks
+    </Directory>
+</VirtualHost>
+
+```
+
+
 #### Permissions
 
 
