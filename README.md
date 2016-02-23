@@ -67,7 +67,7 @@ more options here.
 #### Permissions
 
 To allow Apache and the mscGUI access to MSCS, use your favorite editor to create
-a new file in the `sudoers.d` folder:
+a new file in the `/etc/sudoers.d` folder:
 
     sudo editor /etc/sudoers.d/mscs
 
