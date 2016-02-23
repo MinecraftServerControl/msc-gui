@@ -67,6 +67,12 @@ more options here.
 #### Permissions
 
 
+```
+# Allow www-data to execute the msctl command as the minecraft user.
+www-data ALL=(minecraft:minecraft) NOPASSWD: /usr/local/bin/msctl
+```
+
+
 ## Getting started guide
 
 
