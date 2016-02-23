@@ -28,6 +28,16 @@ Since the GUI is web based, you will need to have a web server installed and wor
 
 ### Download
 
+If you followed the easiest way of [downloading the script](https://github.com/MinecraftServerControl/mscs/blob/master/README.md#downloading-the-script) when installing MSCS, then you will want to do the same here.  With `git` already installed:
+
+    git clone git@github.com:MinecraftServerControl/mscGUI.git
+
+
+##### Other ways to download
+
+This program is still in heavy development.  When I get around to having something stable I'll add
+more options here.
+
 
 ### Configuration
 
