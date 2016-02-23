@@ -66,7 +66,11 @@ more options here.
 
 #### Permissions
 
+To allow Apache and the mscGUI access to MSCS, open your favorite editor:
 
+    sudo editor /etc/sudoers.d/mscs
+
+and add this text :
 ```
 # Allow www-data to execute the msctl command as the minecraft user.
 www-data ALL=(minecraft:minecraft) NOPASSWD: /usr/local/bin/msctl
