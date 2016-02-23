@@ -74,7 +74,6 @@ my $URI = '';
 my $THEME = 'themes/default';
 
 my $TITLE = 'Minecraft Server Control';
-my $VERSION = '0.06';
 
 my $CONTENT_TYPE = 'application/xhtml+xml';
 my $COMPATIBLE_CONTENT_TYPE = 'text/html';
@@ -100,7 +99,6 @@ foreach my $line (mscs ("ls")) {
 # Generate the tags.
 my %tags = (
   'title'             => $TITLE,
-  'version'           => $VERSION,
   'uri'               => $URI,
   'theme'             => $THEME . "/",
   'favicon'           => $URI . $THEME . '/favicon.ico',
@@ -144,7 +142,6 @@ print_gui ();
 
 sub create_dashboard_content {
   my $dashboard = "<p>Displaying Content: Dashboard</p>\n";
-  $dashboard .= "<p>Version: " . $VERSION . "</p>\n";
   return $dashboard;
 }
 
