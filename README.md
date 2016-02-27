@@ -12,7 +12,7 @@
 
 
 ## Overview
-Minecraft Server Control GUI (mscGUI) is a new web-based interface to the [Minecraft Server Control Script](https://github.com/MinecraftServerControl/mscs) that has been controlling many Linux and UNIX powered Minecraft servers since it was first released in 2011.
+Minecraft Server Control GUI (MSC-GUI) is a new web-based interface to the [Minecraft Server Control Script](https://github.com/MinecraftServerControl/mscs) that has been controlling many Linux and UNIX powered Minecraft servers since it was first released in 2011.
 
 
 ## Prerequisites for installation
@@ -31,7 +31,7 @@ Since the GUI is web based, you will need to have a web server installed and wor
 
 If you followed the easiest way of [downloading the script](https://github.com/MinecraftServerControl/mscs/blob/master/README.md#downloading-the-script) when installing MSCS, then you will want to do the same here.  With `git` already installed:
 
-    git clone https://github.com/MinecraftServerControl/mscGUI.git
+    git clone https://github.com/MinecraftServerControl/msc-gui.git
 
 
 ##### Other ways to download
@@ -67,7 +67,7 @@ more options here.
 
 #### Permissions
 
-To allow Apache and the mscGUI access to MSCS, use your favorite editor to create
+To allow Apache and the MSC-GUI access to MSCS, use your favorite editor to create
 a new file in the `/etc/sudoers.d` folder:
 
     sudo editor /etc/sudoers.d/mscs
