@@ -8,7 +8,7 @@
   * [Configuration](#configuration)
 * [Getting started guide](#getting-started-guide)
 * [License](LICENSE)
-* [Disclamer](#disclamer)
+* [Disclaimer](#disclaimer)
 
 
 ## Overview
