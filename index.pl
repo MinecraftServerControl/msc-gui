@@ -81,6 +81,9 @@ my $COMPATIBLE_CONTENT_TYPE = 'text/html';
 my $CGI = new CGI;
 my $AJAX = new CGI::Ajax (display_content => \&display_content);
 
+# Refresh the content every thirty seconds.
+my $REFRESH_TIMER = 30 * 1000;
+
 # Create the menu.
 my %menu = (
   'dashboard' => { function => \&create_dashboard_content, order => 0 }
@@ -126,6 +129,16 @@ $tags{'xhtml_title'} = "<div id='title_box'>" . $tags{'xhtml_title_image'} .
 $tags{'xhtml_menu'} = create_menu_content ();
 $tags{'xhtml_content'} = create_main_content ();
 $tags{'xhtml_style'} = "<style type='text/css'>$style</style>";
+$tags{'xhtml_script'} = "<script type='text/javascript'>\n//<![CDATA[\n" .
+  "var mscInterval;" .
+  "function display_menu(item) { " .
+    "clearInterval(mscInterval);" .
+    "display_content ([item], [\"content_box\"]);" .
+    "mscInterval=setInterval (function () { " .
+      "display_content ([item], [\"content_box\"]);" .
+    " }, " . $REFRESH_TIMER . ");" .
+  " }" .
+  "\n//]]>\n</script>";
 
 # Load the header.
 my $header = load_theme ($THEME . '/header.xhtml');
@@ -196,9 +209,8 @@ sub create_menu_content {
   foreach my $item (sort {$menu{$a}{order} <=> $menu{$b}{order}} keys %menu) {
     $menu .= "<a id='msc_menu_" . $item . "' class='menu_item' " .
       "href='" . $URI . "index.pl?display_content=" . $item . "' " .
-      "onclick='display_content(" .
-        "[\"msc_menu_" . $item . "\"], [\"content_box\"]" .
-      "); return false'>" . $item . "</a>\n";
+      "onclick='display_menu(\"msc_menu_" . $item . "\"); return false;'" .
+      ">" . $item . "</a>\n";
   }
   $menu .= "</div>\n";
   return $menu;
