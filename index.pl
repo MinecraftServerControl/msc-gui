@@ -86,14 +86,13 @@ my %menu = (
   'dashboard' => { function => \&create_dashboard_content, order => 0 }
 );
 
-# Figure out the best content-type to use.
+# Figure out the best content-type to use. Use a backward-compatible
+# content-type for certain user-agents.
 my $content_type = $CONTENT_TYPE;
-if (defined $CGI->user_agent &&  (
-  # Use the compatible content-type for certain user-agents.
-  $CGI->user_agent =~ /MSIE/ || $CGI->user_agent =~ /Lynx/
-)) {
-  $content_type = $COMPATIBLE_CONTENT_TYPE;
-}
+$content_type = $COMPATIBLE_CONTENT_TYPE if (
+  defined $CGI->user_agent &&
+  ($CGI->user_agent =~ /MSIE/ || $CGI->user_agent =~ /Lynx/)
+);
 
 # Add the worlds to the menu.
 foreach my $line (mscs ("ls")) {
