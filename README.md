@@ -60,7 +60,7 @@ Here is an example of a file that can be placed in the
 `/etc/apache2/sites-enabled/` directory to enable Apache to run a webserver
 on port `80` on the host `minecraft.server.com` from the directory
 `/var/www`. Change these values to suit your the needs of your website. This
-configuration makes the GUI available at `http:\\minecraft.server.com\gui`.
+configuration would make the GUI available at `http:\\localhost\gui`.
 
 ```
 <VirtualHost *:80>
