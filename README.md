@@ -60,7 +60,7 @@ Here is an example of a file that can be placed in the
 `/etc/apache2/sites-enabled/` directory to enable Apache to run a webserver
 on port `80` on the host `minecraft.server.com` from the directory
 `/var/www`. Change these values to suit your the needs of your website. This
-configuration makes the GUI available at `http:\\minecraft.server.com\gui`.
+configuration would make the GUI available at `http:\\localhost\gui`.
 
 ```
 <VirtualHost *:80>
@@ -87,8 +87,8 @@ Make sure to create a symbolic link so that Apache can actually find the GUI:
 You will also need to enable the Apache CGI module and restart Apache for the
 GUI to work:
 
-    a2enmod cgi
-    service apache2 restart
+    sudo a2enmod cgi
+    sudo service apache2 restart
 
 #### Permissions
 
