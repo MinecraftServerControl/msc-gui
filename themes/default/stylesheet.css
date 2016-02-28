@@ -7,9 +7,11 @@ body {
 
 #title_box {
   background-color: #777777;
+  background-image: url("themes/default/title-background.png");
+  background-repeat: no-repeat;
   position: absolute;
   width: 100%;
-  height: 110px;
+  height: 140px;
   left: 0px;
   top: 0px;
   z-index: 0;
@@ -21,10 +23,12 @@ body {
   top: 0px;
   margin-top: 25px;
   z-index: 1;
+  color: white;
   font-size: 50px;
   font-weight: bold;
   text-decoration: none;
   text-align: left;
+  text-shadow: 2px 2px #777777;
 }
 
 #title_image {
@@ -32,14 +36,13 @@ body {
 }
 
 #menu_box {
-  background-color: #777777;
   position: absolute;
   width: 100%;
   height: 30px;
   left: 0px;
   top: 110px;
   margin: 0px;
-  z-index: 0;
+  z-index: 1;
 }
 
 a.menu_item {
