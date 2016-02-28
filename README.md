@@ -43,7 +43,7 @@ If you followed the easiest way of [downloading the script](https://github.com/M
 * Get the development version as a [zip file]
 (https://github.com/MinecraftServerControl/msc-gui/archive/master.zip):
 
-    wget https://github.com/MinecraftServerControl/msc-gui/archive/master.zip
+    `wget https://github.com/MinecraftServerControl/msc-gui/archive/master.zip`
 
 ### Configuration
 
