@@ -87,8 +87,8 @@ Make sure to create a symbolic link so that Apache can actually find the GUI:
 You will also need to enable the Apache CGI module and restart Apache for the
 GUI to work:
 
-    a2enmod cgi
-    service apache2 restart
+    sudo a2enmod cgi
+    sudo service apache2 restart
 
 #### Permissions
 
