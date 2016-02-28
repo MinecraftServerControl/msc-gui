@@ -86,6 +86,15 @@ my %menu = (
   'dashboard' => { function => \&create_dashboard_content, order => 0 }
 );
 
+# Figure out the best content-type to use.
+my $content_type = $CONTENT_TYPE;
+if (defined $CGI->user_agent &&  (
+  # Use the compatible content-type for certain user-agents.
+  $CGI->user_agent =~ /MSIE/ || $CGI->user_agent =~ /Lynx/
+)) {
+  $content_type = $COMPATIBLE_CONTENT_TYPE;
+}
+
 # Add the worlds to the menu.
 foreach my $line (mscs ("ls")) {
   if ($line =~ /^\s*(\w+):/) {
@@ -126,8 +135,10 @@ my $body = load_theme ($THEME . '/body.xhtml');
 # Load the footer.
 my $footer = load_theme ($THEME . '/footer.xhtml');
 
-# Print the GUI.
-print_gui ();
+# Output the XHTML.
+print $AJAX->build_html (
+  $CGI, $header . $body . $footer, { -type => $content_type }
+);
 
 
 =head2 create_dashboard_content
@@ -271,28 +282,4 @@ sub load_theme {
 
 sub mscs {
   return `mscs @_`;
-}
-
-=head2 print_gui
-
-  Title    : print_gui
-  Usage    :
-  Function : Print the web-based GUI.
-  Returns  :
-  Args     :
-
-=cut
-
-sub print_gui {
-  my $content_type = $CONTENT_TYPE;
-  # Use the compatible content-type for certain user-agents.
-  if (defined $CGI->user_agent &&  (
-    $CGI->user_agent =~ /MSIE/ || $CGI->user_agent =~ /Lynx/
-  )) {
-    $content_type = $COMPATIBLE_CONTENT_TYPE;
-  }
-  # Output the XHTML.
-  print $AJAX->build_html (
-    $CGI, $header . $body . $footer, { -type => $content_type }
-  );
 }
