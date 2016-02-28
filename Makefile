@@ -16,4 +16,3 @@ clean:
 
 $(MSC_GUI_HOME):
 	mkdir -p -m 755 $(MSC_GUI_HOME)
-
