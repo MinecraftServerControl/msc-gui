@@ -56,6 +56,11 @@ by running:
 
 #### Apache
 
+Here is an example of a file that can be placed in the
+`/etc/apache2/sites-enabled/` directory to enable Apache to run a webserver
+on port `80` on the host `minecraft.server.com` from the directory
+`/var/www`. Change these values to suit your the needs of your website. This
+configuration makes the GUI available at `http:\\minecraft.server.com\gui`.
 
 ```
 <VirtualHost *:80>
@@ -75,6 +80,16 @@ by running:
 
 ```
 
+Make sure to create a symbolic link so that Apache can actually find the GUI:
+
+    sudo ln -s /opt/mscs/gui /var/www/gui
+
+You will also need to enable the Apache CGI module and restart Apache for the
+GUI to work:
+
+    a2enmod cgi
+    service apache2 restart
+
 #### Permissions
 
 To allow Apache and the MSC-GUI access to MSCS, use your favorite editor to
@@ -84,11 +99,8 @@ create a new file in the `/etc/sudoers.d` folder:
 
 and add this text :
 
-```
-# Allow www-data to execute the msctl command as the minecraft user.
-www-data ALL=(minecraft:minecraft) NOPASSWD: /usr/local/bin/msctl
-```
-
+    # Allow www-data to execute the msctl command as the minecraft user.
+    www-data ALL=(minecraft:minecraft) NOPASSWD: /usr/local/bin/msctl
 
 ## Getting started guide
 
