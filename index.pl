@@ -183,7 +183,10 @@ sub create_main_content {
   my $content = "<div id='content_box'>";
   # Check if content needs to be displayed.
   my %vars = $CGI->Vars;
-  if (defined $vars{display_content}) {
+  if (
+    defined $vars{display_content} &&
+    defined $menu{$vars{display_content}}
+  ) {
     $content .= &{$menu{$vars{display_content}}{function}};
   }
   else {
