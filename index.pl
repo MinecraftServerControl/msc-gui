@@ -227,7 +227,7 @@ sub create_menu_content {
 =cut
 
 sub create_world_content {
-  my $world = shift;
+  my ($world) = @_;
   return sub {
     my $display = '<p>Displaying World: ' . $world . '</p>';
     $display .= "<pre>";
