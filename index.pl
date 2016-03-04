@@ -188,7 +188,6 @@ sub create_main_content {
   }
   else {
     # Otherwise default to the dashboard.
-    my @keys = sort {$menu{$a}{order} <=> $menu{$b}{order}} keys %menu;
     $content .= &{$menu{'dashboard'}{function}};
   }
   $content .= "</div>";
