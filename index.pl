@@ -130,7 +130,7 @@ $tags{'xhtml_menu'} = create_menu_content ();
 $tags{'xhtml_content'} = create_main_content ();
 $tags{'xhtml_style'} = "<style type='text/css'>/*<![CDATA[*/\n" .
   $style . "\n/*]]>*/</style>";
-$tags{'xhtml_script'} = "<script type='text/javascript'>\n//<![CDATA[\n" .
+$tags{'xhtml_script'} = "<script type='text/javascript'>//<![CDATA[\n" .
   "var mscInterval;" .
   "function display_menu(item) { " .
     "clearInterval(mscInterval);" .
@@ -139,7 +139,7 @@ $tags{'xhtml_script'} = "<script type='text/javascript'>\n//<![CDATA[\n" .
       "display_content ([item], [\"content_box\"]);" .
     " }, " . $REFRESH_TIMER . ");" .
   " }" .
-  "\n//]]>\n</script>";
+  "\n//]]></script>";
 
 # Load the header.
 my $header = load_theme ($THEME . '/header.xhtml');
