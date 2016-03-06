@@ -266,9 +266,11 @@ sub load_theme {
   my ($file, $world) = @_;
   my %world_tags = ();
   if (defined $world) {
+    my $backups = mscs ("list-backups", $world);
     my @query = split /\t/, mscs ("query", $world);
     %world_tags = (
       "world_name"       => $world,
+      "backup_list"      => $backups,
       "query_motd"       => $query[6],
       "query_gametype"   => $query[8],
       "query_gameid"     => $query[10],
