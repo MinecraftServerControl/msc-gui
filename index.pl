@@ -121,7 +121,7 @@ my $style = load_theme ($THEME . '/stylesheet.css');
 
 # Add some preformated XHTML to the tags.
 $tags{'xhtml_favicon'} = "<link rel='icon' href='" . $tags{'favicon'} .
-  "' type='image'/>";
+  "' type='image/x-icon'/>";
 $tags{'xhtml_title_image'} = "<img id='title_image' src='" .
   $tags{'title_image'} . "' alt='Title Image'/>";
 $tags{'xhtml_title'} = "<div id='title_box'>" . $tags{'xhtml_title_image'} .
