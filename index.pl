@@ -232,11 +232,7 @@ sub create_menu_content {
 sub create_world_content {
   my ($world) = @_;
   return sub {
-    my $display = '<p>Displaying World: ' . $world . '</p>';
-    $display .= "<pre>";
-    $display .= join "", mscs ("status", $world);
-    $display .= "</pre>";
-    return $display;
+    return load_theme ($THEME . '/world.xhtml', $world);
   };
 }
 
@@ -262,11 +258,30 @@ sub display_content {
   Function : Loads and renders the given theme file.
   Returns  : The rendered theme file.
   Args     : file - The theme file to load.
+             world - Optional world.
 
 =cut
 
 sub load_theme {
-  my ($file) = @_;
+  my ($file, $world) = @_;
+  my %world_tags = ();
+  if (defined $world) {
+    my @query = split /\t/, mscs ("query", $world);
+    %world_tags = (
+      "world_name"       => $world,
+      "query_motd"       => $query[6],
+      "query_gametype"   => $query[8],
+      "query_gameid"     => $query[10],
+      "query_version"    => $query[12],
+      "query_plugins"    => $query[14],
+      "query_map"        => $query[16],
+      "query_numplayers" => $query[18],
+      "query_maxplayers" => $query[20],
+      "query_hostport"   => $query[22],
+      "query_hostip"     => $query[24],
+      "query_players"    => $query[30],
+    );
+  }
   my $theme = '';
   open (THEME, $file) or
     die "Can't open theme " . $file . ": $!";
@@ -275,6 +290,9 @@ sub load_theme {
       my $t = '';
       if (defined $tags{$1}) {
         $t = $tags{$1};
+      }
+      elsif (defined $world_tags{$1}) {
+        $t = $world_tags{$1};
       }
       $line =~ s/(<\?msc_$1\?>)/$t/;
     }
