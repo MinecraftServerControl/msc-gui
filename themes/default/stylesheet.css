@@ -73,3 +73,10 @@ a.menu_item {
   text-decoration: none;
   text-align: left;
 }
+
+#map {
+  border-style: solid;
+  position: absolute;
+  left: 600px;
+  top: 0px;
+}
