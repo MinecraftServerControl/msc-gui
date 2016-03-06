@@ -80,3 +80,21 @@ a.menu_item {
   left: 600px;
   top: 0px;
 }
+
+@media handheld, only screen and (max-width: 560px), only screen and (max-device-width: 480px) {
+  #title_box {
+    height: 180px;
+  }
+
+  #menu_box {
+    height: 60px;
+  }
+
+  a.menu_item {
+    font-size: 40px;
+  }
+
+  #content_box {
+    top: 180px;
+  }
+}
