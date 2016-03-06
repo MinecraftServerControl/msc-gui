@@ -128,8 +128,8 @@ $tags{'xhtml_title'} = "<div id='title_box'>" . $tags{'xhtml_title_image'} .
   "</div><div id='title'>$TITLE</div>";
 $tags{'xhtml_menu'} = create_menu_content ();
 $tags{'xhtml_content'} = create_main_content ();
-$tags{'xhtml_style'} = "<style type='text/css'>\n//<![CDATA[\n" .
-  $style . "\n//]]>\n</style>";
+$tags{'xhtml_style'} = "<style type='text/css'>/*<![CDATA[*/\n" .
+  $style . "\n/*]]>*/</style>";
 $tags{'xhtml_script'} = "<script type='text/javascript'>\n//<![CDATA[\n" .
   "var mscInterval;" .
   "function display_menu(item) { " .
