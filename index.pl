@@ -150,7 +150,8 @@ my $footer = load_theme ($THEME . '/footer.xhtml');
 
 # Output the XHTML.
 print $AJAX->build_html (
-  $CGI, $header . $body . $footer, { -type => $content_type }
+  $CGI, $header . $body . $footer,
+  { -charset => 'UTF-8', -type => $content_type }
 );
 
 
