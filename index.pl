@@ -112,24 +112,12 @@ my %tags = (
   'title'             => $TITLE,
   'uri'               => $URI,
   'theme'             => $THEME . "/",
-  'favicon'           => $URI . $THEME . '/favicon.ico',
   'title_image'       => $URI . $THEME . "/title-image.png"
 );
 
-# Load the stylesheet.
-my $style = load_theme ($THEME . '/stylesheet.css');
-
 # Add some preformated XHTML to the tags.
-$tags{'xhtml_favicon'} = "<link rel='icon' href='" . $tags{'favicon'} .
-  "' type='image/x-icon'/>";
-$tags{'xhtml_title_image'} = "<img id='title_image' src='" .
-  $tags{'title_image'} . "' alt='Title Image'/>";
-$tags{'xhtml_title'} = "<div id='title_box'>" . $tags{'xhtml_title_image'} .
-  "</div><div id='title'>$TITLE</div>";
 $tags{'xhtml_menu'} = create_menu_content ();
 $tags{'xhtml_content'} = create_main_content ();
-$tags{'xhtml_style'} = "<style type='text/css'>/*<![CDATA[*/\n" .
-  $style . "\n/*]]>*/</style>";
 $tags{'xhtml_script'} = "<script type='text/javascript'>//<![CDATA[\n" .
   "var mscInterval;" .
   "function display_menu(item) { " .
@@ -141,17 +129,12 @@ $tags{'xhtml_script'} = "<script type='text/javascript'>//<![CDATA[\n" .
   " }" .
   "\n//]]></script>";
 
-# Load the header.
-my $header = load_theme ($THEME . '/header.xhtml');
-# Load the body.
-my $body = load_theme ($THEME . '/body.xhtml');
-# Load the footer.
-my $footer = load_theme ($THEME . '/footer.xhtml');
+# Load the index.
+my $index = load_theme ($THEME . '/index.xhtml');
 
 # Output the XHTML.
 print $AJAX->build_html (
-  $CGI, $header . $body . $footer,
-  { -charset => 'UTF-8', -type => $content_type }
+  $CGI, $index, { -charset => 'UTF-8', -type => $content_type }
 );
 
 
@@ -181,7 +164,7 @@ sub create_dashboard_content {
 =cut
 
 sub create_main_content {
-  my $content = "<div id='content_box'>";
+  my $content = "";
   # Check if content needs to be displayed.
   my %vars = $CGI->Vars;
   if (
@@ -194,7 +177,6 @@ sub create_main_content {
     # Otherwise default to the dashboard.
     $content .= &{$menu{'dashboard'}{function}};
   }
-  $content .= "</div>";
   return $content;
 }
 
@@ -209,14 +191,13 @@ sub create_main_content {
 =cut
 
 sub create_menu_content {
-  my $menu = "<div id='menu_box'>\n";
+  my $menu = "";
   foreach my $item (sort {$menu{$a}{order} <=> $menu{$b}{order}} keys %menu) {
     $menu .= "<a id='msc_menu_" . $item . "' class='menu_item' " .
       "href='" . $URI . "index.pl?display_content=" . $item . "' " .
       "onclick='display_menu(\"msc_menu_" . $item . "\"); return false;'" .
       ">" . $item . "</a>\n";
   }
-  $menu .= "</div>\n";
   return $menu;
 }
 
