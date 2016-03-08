@@ -263,7 +263,7 @@ sub load_theme {
       "query_maxplayers" => $query[20],
       "query_hostport"   => $query[22],
       "query_hostip"     => $query[24],
-      "query_players"    => $query[30],
+      "query_players"    => $query[29],
     );
   }
   my $theme = '';
