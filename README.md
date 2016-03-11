@@ -17,6 +17,12 @@ Minecraft Server Control GUI (MSC-GUI) is a new web-based interface to the
 many Linux and UNIX powered Minecraft servers since it was first released in
 2011.
 
+MSC-GUI is currently under heavy development and will be in various stages
+of usability for the immediate future.  As of this writing, the only code
+available is at the proof-of-concept stage.  This proof-of-concept code will
+evolve or be replaced as the concept matures.  When the MSC-GUI is in a more
+usable state, this message will be removed.
+
 ## Prerequisites for installation
 
 The Minecraft Server Control GUI uses Perl to present a web-based interface to
