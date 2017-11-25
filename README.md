@@ -103,7 +103,7 @@ create a new file in the `/etc/sudoers.d` folder:
 and add this text :
 
     # Allow www-data to execute the msctl command as the minecraft user.
-    www-data ALL=(minecraft:minecraft) NOPASSWD: /usr/local/bin/msctl
+    www-data ALL=(minecraft:minecraft) NOPASSWD:SETENV: /usr/local/bin/msctl
 
 ## Getting started guide
 
