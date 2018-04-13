@@ -97,8 +97,8 @@ $content_type = $COMPATIBLE_CONTENT_TYPE if (
   ($CGI->user_agent =~ /MSIE/ || $CGI->user_agent =~ /Lynx/)
 );
 
-# Add the worlds to the menu.
-foreach my $line (mscs ("ls")) {
+# Add the enabled worlds to the menu.
+foreach my $line (mscs ("ls enabled")) {
   if ($line =~ /^\s*(\w+):/) {
     my $function = create_world_content ($1);
     my $order = scalar keys %menu;
