@@ -107,6 +107,16 @@ foreach my $line (mscs ("ls enabled")) {
   }
 }
 
+# Add the disabled worlds to the menu.
+foreach my $line (mscs ("ls disabled")) {
+  if ($line =~ /^\s*(\w+):/) {
+    my $function = create_disabled_world_content ($1);
+    my $order = scalar keys %menu;
+    $menu{$1}{function} = $function;
+    $menu{$1}{order} = $order;
+  }
+}
+
 # Generate the tags.
 my %tags = (
   'title'             => $TITLE,
@@ -215,6 +225,23 @@ sub create_world_content {
   my ($world) = @_;
   return sub {
     return load_theme ($THEME . '/world.xhtml', $world);
+  };
+}
+
+=head2 create_disabled_world_content
+
+  Title    : create_disabled_world_content
+  Usage    :
+  Function : Creates the world content for a disabled world of interest.
+  Returns  : The content for the disabled world of interest.
+  Args     : world - The disabled world of interest.
+
+=cut
+
+sub create_disabled_world_content {
+  my ($world) = @_;
+  return sub {
+    return load_theme ($THEME . '/disabled-world.xhtml', $world);
   };
 }
 
