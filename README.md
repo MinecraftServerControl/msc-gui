@@ -12,17 +12,21 @@
 
 ## Overview
 Minecraft Server Control GUI (MSC-GUI) is a new web-based interface to the
-[Minecraft Server Control Script]
-(https://github.com/MinecraftServerControl/mscs) that has been controlling
-many Linux and UNIX powered Minecraft servers since it was first released in
-2011.
+[Minecraft Server Control Script](https://github.com/MinecraftServerControl/mscs)
+that has been controlling many Linux and UNIX powered Minecraft servers since
+it was first released in 2011.
+
+MSC-GUI is currently under heavy development and will be in various stages
+of usability for the immediate future.  As of this writing, the only code
+available is at the proof-of-concept stage.  This proof-of-concept code will
+evolve or be replaced as the concept matures.  When the MSC-GUI is in a more
+usable state, this message will be removed.
 
 ## Prerequisites for installation
 
-The Minecraft Server Control GUI uses Perl to present a web-based interface to
-the [Minecraft Server Control Script]
-(https://github.com/MinecraftServerControl/mscs).  As such, the `mscs` script
-must be [installed](https://github.com/MinecraftServerControl/mscs/blob/master/README.md#installation)
+The Minecraft Server Control GUI uses Perl to present a web-based interface to the
+[Minecraft Server Control Script](https://github.com/MinecraftServerControl/mscs).
+As such, the `mscs` script must be [installed](https://github.com/MinecraftServerControl/mscs/blob/master/README.md#installation)
 and working for the GUI to function. Since the GUI is web based, you will need
 to have a web server installed and working.  These directions assume you are
 using [Apache](https://httpd.apache.org), but any web server solution should
@@ -40,8 +44,7 @@ If you followed the easiest way of [downloading the script](https://github.com/M
 
 ##### Other ways to download
 
-* Get the development version as a [zip file]
-(https://github.com/MinecraftServerControl/msc-gui/archive/master.zip):
+* Get the development version as a [zip file](https://github.com/MinecraftServerControl/msc-gui/archive/master.zip):
 
     wget https://github.com/MinecraftServerControl/msc-gui/archive/master.zip
 
@@ -100,7 +103,7 @@ create a new file in the `/etc/sudoers.d` folder:
 and add this text :
 
     # Allow www-data to execute the msctl command as the minecraft user.
-    www-data ALL=(minecraft:minecraft) NOPASSWD: /usr/local/bin/msctl
+    www-data ALL=(minecraft:minecraft) NOPASSWD:SETENV: /usr/local/bin/msctl
 
 ## Getting started guide
 
