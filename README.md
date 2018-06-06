@@ -24,12 +24,17 @@ usable state, this message will be removed.
 
 ## Prerequisites for installation
 
-The Minecraft Server Control GUI uses Perl and Mojolicious, a Perl-based web
-framework, to present a web-based interface to the
+The Minecraft Server Control GUI uses Perl and
+[Mojolicious](https://mojolicious.org/), a Perl-based web framework, to
+present a web-based interface to the
 [Minecraft Server Control Script](https://github.com/MinecraftServerControl/mscs).
 As such, the `mscs` script must be
 [installed](https://github.com/MinecraftServerControl/mscs/blob/master/README.md#installation)
-and working for the GUI to function.
+and working for the GUI to function. Likewise, Mojolicious must be installed
+for MSC-GUI to function. If you are running Debian or Ubuntu, you can make
+sure that Mojolicious is installed by running:
+
+    sudo apt install libmojolicious-perl
 
 ## Installation
 
