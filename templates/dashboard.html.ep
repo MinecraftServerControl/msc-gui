@@ -1,0 +1,7 @@
+% layout 'default';
+
+<h1>Dashboard</h1>
+<h2>Enabled Worlds:</h2>
+<%= msc_enabled_world_list %>
+<h2>Disabled Worlds:</h2>
+<%= msc_disabled_world_list %>

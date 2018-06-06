@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><%= title %></title>
+<link rel='icon' type='image/x-icon' href='/favicon.ico'/>
+<link rel='stylesheet' type='text/css' href='/stylesheet.css'/>
+</head>
+<body>
+<div id='body_box'>
+<div id='title_box'>
+<img id='title_image' src='/title-image.png' alt='Title Image'/>
+</div>
+<div id='title'>Minecraft Server Control</div>
+<div id='menu_box'><%= msc_menu %></div>
+<div id='content_box'><%= content %></div>
+</div>
+</body>
+</html>

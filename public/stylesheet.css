@@ -1,11 +1,20 @@
 body {
-  background-color: #aaaaaa;
+  background-color: #ababab;
   width: 100%;
   margin: 0px;
 }
 
+#body_box {
+  background-color: #5d6e7f;
+  position: absolute;
+  width: 1000px;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  z-index: 0;
+}
+
 #title_box {
-  background-color: #666666;
   background-image: url("title-background.png");
   background-repeat: no-repeat;
   position: absolute;
@@ -17,7 +26,7 @@ body {
 }
 
 #title {
-  position:absolute;
+  position: absolute;
   left: 130px;
   top: 0px;
   margin-top: 25px;
@@ -45,7 +54,7 @@ body {
   z-index: 1;
 }
 
-a.menu_item {
+a.menu_item_active {
   display: inline-block;
   text-decoration: none;
   text-shadow: 0px 1px 0px #aaaaaa;
@@ -55,16 +64,29 @@ a.menu_item {
   padding: 5px 10px 5px 10px;
   text-transform: capitalize;
   border-radius: 10px 10px 0px 0px;
-  background-image: linear-gradient(to bottom, #999999, #666666);
+  background-image: linear-gradient(to bottom, #6eb5ff, #5d6e7f);
+  z-index: 1;
+}
+
+a.menu_item_inactive {
+  display: inline-block;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #aaaaaa;
+  color: #000000;
+  font-family: "Arial", sans-serif;
+  font-size: 20px;
+  padding: 5px 10px 5px 10px;
+  text-transform: capitalize;
+  border-radius: 10px 10px 0px 0px;
+  background-image: linear-gradient(to bottom, #5891cc, #5d6e7f);
   z-index: 1;
 }
 
 #content_box {
-  background-color: #666666;
   position: absolute;
-  width: 1000px;
+  width: 980px;
   height: 500px;
-  left: 0px;
+  left: 20px;
   top: 150px;
   margin: 0px;
   z-index: 0;
@@ -77,7 +99,7 @@ a.menu_item {
 #map {
   border-style: solid;
   position: absolute;
-  left: 600px;
+  left: 580px;
   top: 0px;
 }
 
