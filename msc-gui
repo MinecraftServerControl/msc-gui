@@ -71,34 +71,6 @@ use Mojo::ByteStream;
 
 =head2 Helper Functions
 
-=head3 msc_enabled_world_list
-
-  Returns an unordered list in HTML format containing enabled worlds.
-
-=cut
-
-helper 'msc_enabled_world_list' => sub {
-  my $self = shift;
-  my $result = join "\n", map {
-    "<li><a href='/worlds/$_'>$_</a></li>"
-  } &getEnabledWorlds;
-  return new Mojo::ByteStream ("<ul>\n$result\n</ul>");
-};
-
-=head3 msc_disabled_world_list
-
-  Returns an unordered list in HTML format containing disabled worlds.
-
-=cut
-
-helper 'msc_disabled_world_list' => sub {
-  my $self = shift;
-  my $result = join "\n", map {
-    "<li><a href='/worlds/$_'>$_</a></li>"
-  } &getDisabledWorlds;
-  return new Mojo::ByteStream ("<ul>\n$result\n</ul>");
-};
-
 =head3 msc_menu
 
   Returns the menu in HTML format.
