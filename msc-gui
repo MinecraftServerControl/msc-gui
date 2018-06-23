@@ -130,8 +130,9 @@ helper 'msc_menu' => sub {
 
 get '/' => sub {
   my $self = shift;
+  $self->stash (title => "MSC GUI: Dashboard");
   $self->stash (msc_menu_active => 'dashboard');
-  $self->render (template => "dashboard", title => "MSC GUI: Dashboard");
+  $self->render (template => "dashboard");
 };
 
 =head3 get /worlds
@@ -142,7 +143,8 @@ get '/' => sub {
 
 get '/worlds' => sub {
   my $self = shift;
-  $self->render (template => "worlds", title => "MSC GUI: World List");
+  $self->stash (title => "MSC GUI: World List");
+  $self->render (template => "worlds");
 };
 
 =head3 get /worlds/<world>
@@ -154,6 +156,7 @@ get '/worlds' => sub {
 get '/worlds/:world' => sub {
   my $self = shift;
   my $world = $self->stash ('world');
+  $self->stash (title => "MSC GUI: $world");
   $self->stash (msc_menu_active => $world);
   my %enabledWorlds = map { $_ => 1 } &getEnabledWorlds;
   if (defined $enabledWorlds{$world}) {
@@ -171,10 +174,10 @@ get '/worlds/:world' => sub {
     $self->stash (msc_query_hostport   => $query[22]);
     $self->stash (msc_query_hostip     => $query[24]);
     $self->stash (msc_query_players    => $query[29]);
-    $self->render (template => "enabled-world", title => "MSC GUI: $world");
+    $self->render (template => "enabled-world");
   }
   else {
-    $self->render (template => 'disabled-world', title => "MSC GUI: $world");
+    $self->render (template => 'disabled-world');
   }
 };
 
