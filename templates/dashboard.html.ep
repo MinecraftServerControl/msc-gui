@@ -1,7 +1,17 @@
 % layout 'default';
 
 <h1>Dashboard</h1>
+
 <h2>Enabled Worlds:</h2>
-<%= msc_enabled_world_list %>
+<ul>
+% foreach (@{stash ('msc_enabled_worlds')}) {
+  <li><a href="/worlds/<%= $_ %>"><%= $_ %></a></li>
+% }
+</ul>
+
 <h2>Disabled Worlds:</h2>
-<%= msc_disabled_world_list %>
+<ul>
+% foreach (@{stash ('msc_disabled_worlds')}) {
+  <li><a href="/worlds/<%= $_ %>"><%= $_ %></a></li>
+% }
+</ul>
