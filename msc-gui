@@ -131,6 +131,8 @@ helper 'msc_menu' => sub {
 get '/' => sub {
   my $self = shift;
   $self->stash (title => "MSC GUI: Dashboard");
+  $self->stash (msc_enabled_worlds => [ &getEnabledWorlds ]);
+  $self->stash (msc_disabled_worlds => [ &getDisabledWorlds ]);
   $self->stash (msc_menu_active => 'dashboard');
   $self->render (template => "dashboard");
 };
@@ -144,6 +146,8 @@ get '/' => sub {
 get '/worlds' => sub {
   my $self = shift;
   $self->stash (title => "MSC GUI: World List");
+  $self->stash (msc_enabled_worlds => [ &getEnabledWorlds ]);
+  $self->stash (msc_disabled_worlds => [ &getDisabledWorlds ]);
   $self->render (template => "worlds");
 };
 
