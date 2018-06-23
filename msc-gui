@@ -68,6 +68,7 @@ use feature ':5.10';
 
 use Mojolicious::Lite;
 use Mojo::ByteStream;
+use Mojo::JSON qw(decode_json);
 
 =head2 Helper Functions
 
@@ -102,9 +103,16 @@ helper 'msc_menu' => sub {
 
 get '/' => sub {
   my $self = shift;
+  my @enabled = &getEnabledWorlds;
+  my @disabled = &getDisabledWorlds;
+  my %query;
+  foreach my $world (@enabled) {
+    $query{$world} = decode_json mscs ("query-json", $world);
+  }
   $self->stash (title => "MSC GUI: Dashboard");
-  $self->stash (msc_enabled_worlds => [ &getEnabledWorlds ]);
-  $self->stash (msc_disabled_worlds => [ &getDisabledWorlds ]);
+  $self->stash (msc_enabled_worlds => \@enabled);
+  $self->stash (msc_disabled_worlds => \@disabled);
+  $self->stash (msc_query => \%query);
   $self->stash (msc_menu_active => 'dashboard');
   $self->render (template => "dashboard");
 };
