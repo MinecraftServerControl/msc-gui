@@ -1,0 +1,6 @@
+% use Mojo::JSON qw (to_json);
+% my $json = {
+%   enabled_worlds => stash ('msc_enabled_worlds'),
+%   disabled_worlds => stash ('msc_disabled_worlds')
+% };
+%== to_json $json
