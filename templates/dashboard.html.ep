@@ -1,17 +1,27 @@
 % layout 'default';
 
-<h1>Dashboard</h1>
-
-<h2>Enabled Worlds:</h2>
-<ul>
-% foreach (@{stash ('msc_enabled_worlds')}) {
-  <li><a href="/worlds/<%= $_ %>"><%= $_ %></a></li>
+<div class="row">
+% my %query = %{stash ('msc_query')};
+% foreach my $world (@{stash ('msc_enabled_worlds')}) {
+  <div class="col-lg-4 col-sm-6 portfolio-item">
+    <div class="card h-100">
+      <a href="#"><img class="card-img-top" src="http://placehold.it/100x100" alt=""></a>
+      <div class="card-body">
+        <h4 class="card-title"><a href="/worlds/<%= $world %>"><%= $world %></a></h4>
+        <p class="card-text"><%= $query{$world}->{motd} %></p>
+      </div>
+    </div>
+  </div>
 % }
-</ul>
-
-<h2>Disabled Worlds:</h2>
-<ul>
-% foreach (@{stash ('msc_disabled_worlds')}) {
-  <li><a href="/worlds/<%= $_ %>"><%= $_ %></a></li>
+% foreach my $world (@{stash ('msc_disabled_worlds')}) {
+  <div class="col-lg-4 col-sm-6 portfolio-item">
+    <div class="card h-100">
+      <a href="#"><img class="card-img-top" src="http://placehold.it/100x100" alt=""></a>
+      <div class="card-body">
+        <h4 class="card-title"><a href="#"><%= $world %></a></h4>
+        <p class="card-text">Disabled</p>
+      </div>
+    </div>
+  </div>
 % }
-</ul>
+</div>
