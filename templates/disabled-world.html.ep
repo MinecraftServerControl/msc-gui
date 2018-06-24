@@ -1,3 +1,5 @@
 % layout 'default';
 
-<h1>Disabled world: <%= $world %></h1>
+<h1><%= ucfirst $world %></h1>
+
+World Disabled
