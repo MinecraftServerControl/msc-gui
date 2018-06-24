@@ -105,14 +105,11 @@ get '/' => sub {
   my $self = shift;
   my @enabled = &getEnabledWorlds;
   my @disabled = &getDisabledWorlds;
-  my %query;
-  foreach my $world (@enabled) {
-    $query{$world} = decode_json mscs ("query-json", $world);
-  }
+  my $status = decode_json mscs ("status-json");
   $self->stash (title => "MSC GUI: Dashboard");
   $self->stash (msc_enabled_worlds => \@enabled);
   $self->stash (msc_disabled_worlds => \@disabled);
-  $self->stash (msc_query => \%query);
+  $self->stash (msc_status => $status);
   $self->stash (msc_menu_active => 'dashboard');
   $self->render (template => "dashboard");
 };
@@ -140,24 +137,14 @@ get '/worlds' => sub {
 get '/worlds/:world' => sub {
   my $self = shift;
   my $world = $self->stash ('world');
+  my $status = decode_json mscs ("status-json $world");
   $self->stash (title => "MSC GUI: $world");
   $self->stash (msc_menu_active => $world);
+  $self->stash (msc_status      => $status);
   my %enabledWorlds = map { $_ => 1 } &getEnabledWorlds;
   if (defined $enabledWorlds{$world}) {
     my $backups = mscs ("list-backups", $world);
-    my @query = split /\t/, mscs ("query", $world);
-    $self->stash (msc_backup_list      => $backups);
-    $self->stash (msc_query_motd       => $query[6]);
-    $self->stash (msc_query_gametype   => $query[8]);
-    $self->stash (msc_query_gameid     => $query[10]);
-    $self->stash (msc_query_version    => $query[12]);
-    $self->stash (msc_query_plugins    => $query[14]);
-    $self->stash (msc_query_map        => $query[16]);
-    $self->stash (msc_query_numplayers => $query[18]);
-    $self->stash (msc_query_maxplayers => $query[20]);
-    $self->stash (msc_query_hostport   => $query[22]);
-    $self->stash (msc_query_hostip     => $query[24]);
-    $self->stash (msc_query_players    => $query[29]);
+    $self->stash (msc_backup_list => $backups);
     $self->render (template => "enabled-world");
   }
   else {

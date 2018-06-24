@@ -1,5 +1,11 @@
 % layout 'default';
 
+% my $status = stash ('msc_status');
+% my @players = ();
+% if (defined $status->{$world}->{query}->{players}) {
+%   @players = @{$status->{$world}->{query}->{players}};
+% }
+
 <h1><%= $world %></h1>
 
 <pre id="backup_list">
@@ -11,17 +17,17 @@ List of backups:
 <pre id="query">
 Query:
 
-MOTD: <%= $msc_query_motd %>
-Game type: <%= $msc_query_gametype %>
-Game ID: <%= $msc_query_gameid %>
-Server Version: <%= $msc_query_version %>
-Server Plugins: <%= $msc_query_plugins %>
-Server Map: <%= $msc_query_map %>
-Number of players online: <%= $msc_query_numplayers %>
-Maximum players: <%= $msc_query_maxplayers %>
-Host port: <%= $msc_query_hostport %>
-Host IP: <%= $msc_query_hostip %>
-Player list: <%= $msc_query_players %>
+MOTD: <%= $status->{$world}->{query}->{motd} %>
+Game type: <%= $status->{$world}->{query}->{gametype} %>
+Game ID: <%= $status->{$world}->{query}->{gameid} %>
+Server Version: <%= $status->{$world}->{query}->{version} %>
+Server Plugins: <%= $status->{$world}->{query}->{plugins} %>
+Server Map: <%= $status->{$world}->{query}->{map} %>
+Number of players online: <%= $status->{$world}->{query}->{numplayers} %>
+Maximum players: <%= $status->{$world}->{query}->{maxplayers} %>
+Host port: <%= $status->{$world}->{query}->{hostport} %>
+Host IP: <%= $status->{$world}->{query}->{hostip} %>
+Player list: <%= join ',', @players %>
 </pre>
 
 <a href="http://localhost/maps/<%= $world %>/index.html">

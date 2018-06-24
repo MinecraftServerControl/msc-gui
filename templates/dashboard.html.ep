@@ -1,14 +1,27 @@
 % layout 'default';
 
 <div class="row">
-% my %query = %{stash ('msc_query')};
+% my $status = stash ('msc_status');
 % foreach my $world (@{stash ('msc_enabled_worlds')}) {
   <div class="col-lg-4 col-sm-6 portfolio-item">
     <div class="card h-100">
       <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
       <div class="card-body">
-        <h4 class="card-title"><a href="/worlds/<%= $world %>"><%= $world %></a></h4>
-        <p class="card-text"><%= $query{$world}->{motd} %></p>
+        <h4 class="card-title">
+          <a href="/worlds/<%= $world %>"><%= $world %></a>
+          % if (defined $status->{$world}->{running} && $status->{$world}->{running}) {
+          Online
+          % }
+          % else {
+          Offline
+          % }
+        </h4>
+        <p class="card-text">
+          % if (defined $status->{$world}->{query}->{version}) {
+            <%= $status->{$world}->{query}->{numplayers} %> / <%= $status->{$world}->{query}->{maxplayers} %> Players Online<br/>
+            <%= $status->{$world}->{query}->{version} %>
+          % }
+        </p>
       </div>
     </div>
   </div>
@@ -18,8 +31,11 @@
     <div class="card h-100">
       <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
       <div class="card-body">
-        <h4 class="card-title"><a href="#"><%= $world %></a></h4>
-        <p class="card-text">Disabled</p>
+        <h4 class="card-title">
+          <a href="#"><%= $world %></a>
+          Disabled
+        </h4>
+        <p class="card-text"></p>
       </div>
     </div>
   </div>
