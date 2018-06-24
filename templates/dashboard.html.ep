@@ -1,46 +1,48 @@
 % layout 'default';
 
-<div class="row">
 % my $status = stash ('msc_status');
-% foreach my $world (@{stash ('msc_enabled_worlds')}) {
-  <div class="col-lg-4 col-sm-6 portfolio-item">
-    <div class="card h-100">
-      <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-      <div class="card-body">
-        <h4 class="card-title">
-          <a href="/worlds/<%= $world %>"><%= $world %></a>
-          % if (defined $status->{$world}->{running} && $status->{$world}->{running}) {
-          Online
-          % }
-          % else {
-          Offline
-          % }
-        </h4>
-        <p class="card-text">
+<div class="container">
+  <div class="row">
+  % foreach my $world (@{stash ('msc_enabled_worlds')}) {
+    <div class="col-lg-4 col-sm-6 portfolio-item">
+      <div class="card h-100">
+        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+        <div class="card-body">
+          <h4 class="card-title">
+            <a href="/worlds/<%= $world %>"><%= $world %></a>
+            % if ($status->{$world}->{running}) {
+              Online
+            % }
+            % else {
+              Offline
+            % }
+          </h4>
+          <p class="card-text">
           % if (defined $status->{$world}->{query}->{version}) {
             <%= $status->{$world}->{query}->{numplayers} %> / <%= $status->{$world}->{query}->{maxplayers} %> Players Online<br/>
-            <%= $status->{$world}->{query}->{version} %><br/>
+            Version <%= $status->{$world}->{query}->{version} %><br/>
           % }
-          % if (defined $status->{$world}->{running} && $status->{$world}->{running}) {
+          % if ($status->{$world}->{running}) {
             <%= reverse join ',', unpack '(A3)*', reverse $status->{$world}->{memory} %> kB Memory Used
           % }
-        </p>
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-% }
-% foreach my $world (@{stash ('msc_disabled_worlds')}) {
-  <div class="col-lg-4 col-sm-6 portfolio-item">
-    <div class="card h-100">
-      <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-      <div class="card-body">
-        <h4 class="card-title">
-          <a href="#"><%= $world %></a>
-          Disabled
-        </h4>
-        <p class="card-text"></p>
+  % }
+  % foreach my $world (@{stash ('msc_disabled_worlds')}) {
+    <div class="col-lg-4 col-sm-6 portfolio-item">
+      <div class="card h-100">
+        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+        <div class="card-body">
+          <h4 class="card-title">
+            <a href="#"><%= $world %></a>
+            Disabled
+          </h4>
+          <p class="card-text"></p>
+        </div>
       </div>
     </div>
+  % }
   </div>
-% }
 </div>
