@@ -9,7 +9,7 @@
         <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="/worlds/<%= $world %>"><%= $world %></a>
+            <a href="/worlds/<%= $world %>"><%= ucfirst $world %></a>
             % if ($status->{$world}->{running}) {
               Online
             % }
@@ -36,7 +36,7 @@
         <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="#"><%= $world %></a>
+            <a href="#"><%= ucfirst $world %></a>
             Disabled
           </h4>
           <p class="card-text"></p>
