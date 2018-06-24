@@ -19,7 +19,10 @@
         <p class="card-text">
           % if (defined $status->{$world}->{query}->{version}) {
             <%= $status->{$world}->{query}->{numplayers} %> / <%= $status->{$world}->{query}->{maxplayers} %> Players Online<br/>
-            <%= $status->{$world}->{query}->{version} %>
+            <%= $status->{$world}->{query}->{version} %><br/>
+          % }
+          % if (defined $status->{$world}->{running} && $status->{$world}->{running}) {
+            <%= reverse join ',', unpack '(A3)*', reverse $status->{$world}->{memory} %> kB Memory Used
           % }
         </p>
       </div>
