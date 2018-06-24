@@ -86,7 +86,7 @@ a.menu_item_inactive {
   position: absolute;
   width: 980px;
   height: 500px;
-  left: 20px;
+  left: 0px;
   top: 150px;
   margin: 0px;
   z-index: 0;
