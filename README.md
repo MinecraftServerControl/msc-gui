@@ -24,15 +24,17 @@ usable state, this message will be removed.
 
 ## Prerequisites for installation
 
-The Minecraft Server Control GUI uses Perl to present a web-based interface to the
+The Minecraft Server Control GUI uses Perl and
+[Mojolicious](https://mojolicious.org/), a Perl-based web framework, to
+present a web-based interface to the
 [Minecraft Server Control Script](https://github.com/MinecraftServerControl/mscs).
-As such, the `mscs` script must be [installed](https://github.com/MinecraftServerControl/mscs/blob/master/README.md#installation)
-and working for the GUI to function. Since the GUI is web based, you will need
-to have a web server installed and working.  These directions assume you are
-using [Apache](https://httpd.apache.org), but any web server solution should
-function.  To install Apache:
+As such, the `mscs` script must be
+[installed](https://github.com/MinecraftServerControl/mscs/blob/master/README.md#installation)
+and working for the GUI to function. Likewise, Mojolicious must be installed
+for MSC-GUI to function. If you are running Debian or Ubuntu, you can make
+sure that Mojolicious is installed by running:
 
-    sudo apt-get install apache2
+    sudo apt install libmojolicious-perl
 
 ## Installation
 
@@ -55,58 +57,6 @@ can be done with the included Makefile in Debian and Ubuntu like environments
 by running:
 
     sudo make install
-
-
-#### Apache
-
-Here is an example of a file that can be placed in the
-`/etc/apache2/sites-enabled/` directory to enable Apache to run a webserver
-on port `80` on the host `minecraft.server.com` from the directory
-`/var/www`. Change these values to suit your the needs of your website. This
-configuration would make the GUI available at `http:\\localhost\gui`.
-
-```
-<VirtualHost *:80>
-    ServerName minecraft.server.com
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www
-
-    Alias /gui /var/www/gui
-    <Directory "/var/www/gui">
-        Order Allow,Deny
-        Allow from all
-        AllowOverride None
-        AddHandler cgi-script .pl
-        Options +ExecCGI -MultiViews -Indexes -Includes +FollowSymLinks
-    </Directory>
-</VirtualHost>
-
-```
-
-Make sure to create a symbolic link so that Apache can actually find the GUI:
-
-    sudo ln -s /opt/mscs/gui /var/www/gui
-
-You will also need to enable the Apache CGI module and restart Apache for the
-GUI to work:
-
-    sudo a2enmod cgi
-    sudo service apache2 restart
-
-#### Permissions
-
-To allow Apache and the MSC-GUI access to MSCS, use your favorite editor to
-create a new file in the `/etc/sudoers.d` folder:
-
-    sudo editor /etc/sudoers.d/mscs
-
-and add this text :
-
-    # Allow www-data to execute the msctl command as the minecraft user.
-    www-data ALL=(minecraft:minecraft) NOPASSWD:SETENV: /usr/local/bin/msctl
-
-## Getting started guide
-
 
 ## License
 

@@ -1,0 +1,203 @@
+#!/usr/bin/env perl
+
+=head1 NAME
+
+  MSC-GUI
+
+=head1 SYNOPSIS
+
+
+=head1 DESCRIPTION
+
+  Minecraft Server Control GUI (MSC-GUI) is a new web-based interface to the
+  Minecraft Server Control Script that has been controlling many Linux and
+  UNIX powered Minecraft servers since it was first released in 2011.
+
+=head1 DEPENDENCIES
+
+  MSC-GUI requires Perl version 5.10.1 or greater, in addition to Mojolicious.
+
+=head1 FEEDBACK
+
+=head2 Reporting Bugs
+
+  Report bugs to the GitHub issue tracker at:
+  https://github.com/MinecraftServerControl/msc-gui/issues
+
+=head1 AUTHOR - Jason Wood
+
+  Email sandain-at-hotmail.com
+
+=head1 COPYRIGHT AND LICENSE
+
+  Copyright (c) 2018  Jason M. Wood <sandain@hotmail.com>
+
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+
+  1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
+
+=head1 APPENDIX
+
+  The rest of the documentation details each of the object methods.
+
+=cut
+
+use strict;
+use warnings;
+use utf8;
+use feature ':5.10';
+
+use Mojolicious::Lite;
+use Mojo::ByteStream;
+use Mojo::JSON qw(decode_json);
+
+=head2 Helper Functions
+
+=head3 msc_menu
+
+  Returns the menu in HTML format.
+
+=cut
+
+helper 'msc_menu' => sub {
+  my $self = shift;
+  my $active = $self->stash ('msc_menu_active');
+  my $result;
+  my $status = 'inactive';
+  $status = 'active' if ($active eq 'dashboard');
+  $result .= "<a class='menu_item_$status' href='/'>dashboard</a>";
+  foreach my $world (&getEnabledWorlds, &getDisabledWorlds) {
+    $status = 'inactive';
+    $status = 'active' if ($active eq $world);
+    $result .= "<a class='menu_item_$status' href='/worlds/$world'>$world</a>";
+  }
+  return new Mojo::ByteStream ($result);
+};
+
+=head2 HTTP Request Methods
+
+=head3 get /
+
+  Renders the dashboard.
+
+=cut
+
+get '/' => sub {
+  my $self = shift;
+  my @enabled = &getEnabledWorlds;
+  my @disabled = &getDisabledWorlds;
+  my $status = decode_json mscs ("status-json");
+  $self->stash (title => "MSC GUI: Dashboard");
+  $self->stash (msc_enabled_worlds => \@enabled);
+  $self->stash (msc_disabled_worlds => \@disabled);
+  $self->stash (msc_status => $status);
+  $self->stash (msc_menu_active => 'dashboard');
+  $self->render (template => "dashboard");
+};
+
+=head3 get /worlds
+
+  Renders a list of worlds.
+
+=cut
+
+get '/worlds' => sub {
+  my $self = shift;
+  $self->stash (title => "MSC GUI: World List");
+  $self->stash (msc_enabled_worlds => [ &getEnabledWorlds ]);
+  $self->stash (msc_disabled_worlds => [ &getDisabledWorlds ]);
+  $self->render (template => "worlds");
+};
+
+=head3 get /worlds/<world>
+
+  Renders a specific world.
+
+=cut
+
+get '/worlds/:world' => sub {
+  my $self = shift;
+  my $world = $self->stash ('world');
+  my $status = decode_json mscs ("status-json $world");
+  $self->stash (title => "MSC GUI: $world");
+  $self->stash (msc_menu_active => $world);
+  $self->stash (msc_status      => $status);
+  my %enabledWorlds = map { $_ => 1 } &getEnabledWorlds;
+  if (defined $enabledWorlds{$world}) {
+    my $backups = mscs ("list-backups", $world);
+    $self->stash (msc_backup_list => $backups);
+    $self->render (template => "enabled-world");
+  }
+  else {
+    $self->render (template => 'disabled-world');
+  }
+};
+
+# Start the MSC-GUI app.
+app->start;
+
+=head2 Internal Methods
+
+=head3 getEnabledWorlds
+
+  Returns a list of enabled worlds.
+
+=cut
+
+sub getEnabledWorlds {
+  my $self = shift;
+  my @worlds;
+  foreach my $line (mscs ("ls enabled")) {
+    if ($line =~ /^\s*(\w+):/) {
+      push @worlds, $1;
+    }
+  }
+  return @worlds;
+}
+
+=head3 getDisabledWorlds
+
+  Returns a list of disabled worlds.
+
+=cut
+
+sub getDisabledWorlds {
+  my $self = shift;
+  my @worlds;
+  foreach my $line (mscs ("ls disabled")) {
+    if ($line =~ /^\s*(\w+):/) {
+      push @worlds, $1;
+    }
+  }
+  return @worlds;
+}
+
+=head3 mscs
+
+  Run the mscs command and return the output.
+
+=cut
+
+sub mscs {
+  return `mscs @_`;
+}
+
