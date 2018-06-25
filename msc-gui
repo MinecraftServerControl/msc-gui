@@ -70,29 +70,6 @@ use Mojolicious::Lite;
 use Mojo::ByteStream;
 use Mojo::JSON qw(decode_json);
 
-=head2 Helper Functions
-
-=head3 msc_menu
-
-  Returns the menu in HTML format.
-
-=cut
-
-helper 'msc_menu' => sub {
-  my $self = shift;
-  my $active = $self->stash ('msc_menu_active');
-  my $result;
-  my $status = 'inactive';
-  $status = 'active' if ($active eq 'dashboard');
-  $result .= "<a class='menu_item_$status' href='/'>dashboard</a>";
-  foreach my $world (&getEnabledWorlds, &getDisabledWorlds) {
-    $status = 'inactive';
-    $status = 'active' if ($active eq $world);
-    $result .= "<a class='menu_item_$status' href='/worlds/$world'>$world</a>";
-  }
-  return new Mojo::ByteStream ($result);
-};
-
 =head2 HTTP Request Methods
 
 =head3 get /
@@ -139,6 +116,8 @@ get '/worlds/:world' => sub {
   my $world = $self->stash ('world');
   my $status = decode_json mscs ("status-json $world");
   $self->stash (title => "MSC GUI: $world");
+  $self->stash (msc_enabled_worlds => [ &getEnabledWorlds ]);
+  $self->stash (msc_disabled_worlds => [ &getDisabledWorlds ]);
   $self->stash (msc_menu_active => $world);
   $self->stash (msc_status      => $status);
   my %enabledWorlds = map { $_ => 1 } &getEnabledWorlds;
