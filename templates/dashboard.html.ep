@@ -6,7 +6,7 @@
   % foreach my $world (@{stash ('msc_enabled_worlds')}) {
     <div class="col-lg-4 col-sm-6 portfolio-item">
       <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+        <a href="#"><img class="card-img-top" src="http://placehold.it/300x200" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
             <a href="/worlds/<%= $world %>"><%= ucfirst $world %></a>
@@ -21,6 +21,8 @@
           % if (defined $status->{$world}->{query}->{version}) {
             <%= $status->{$world}->{query}->{numplayers} %> / <%= $status->{$world}->{query}->{maxplayers} %> Players Online<br/>
             Version <%= $status->{$world}->{query}->{version} %><br/>
+          % } else {
+            <br/><br/>
           % }
           % if ($status->{$world}->{running}) {
             <%= reverse join ',', unpack '(A3)*', reverse $status->{$world}->{memory} %> kB Memory Used
@@ -33,13 +35,13 @@
   % foreach my $world (@{stash ('msc_disabled_worlds')}) {
     <div class="col-lg-4 col-sm-6 portfolio-item">
       <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+        <a href="#"><img class="card-img-top" src="http://placehold.it/300x200" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
             <a href="#"><%= ucfirst $world %></a>
             Disabled
           </h4>
-          <p class="card-text"></p>
+          <p class="card-text"><br/><br/><br/></p>
         </div>
       </div>
     </div>
