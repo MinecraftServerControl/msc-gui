@@ -41,7 +41,11 @@
           % }
         </ul>
       </li>
-      <li><a href="#">Settings</a></li>
+      % if ($menu_active eq 'settings') {
+      <li class="active"><a href="/settings">Settings</a></li>
+      % } else {
+      <li><a href="/settings">Settings</a></li>
+      % }
     </ul>
   </div>
 </nav>

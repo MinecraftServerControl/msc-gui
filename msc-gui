@@ -91,6 +91,19 @@ get '/' => sub {
   $self->render (template => "dashboard");
 };
 
+=head3 get /settings
+
+=cut
+
+get '/settings' => sub {
+  my $self = shift;
+  $self->stash (title => "MSC GUI: Settings");
+  $self->stash (msc_enabled_worlds => [ &getEnabledWorlds ]);
+  $self->stash (msc_disabled_worlds => [ &getDisabledWorlds ]);
+  $self->stash (msc_menu_active => 'settings');
+  $self->render (template => "settings");
+};
+
 =head3 get /worlds
 
   Renders a list of worlds.
