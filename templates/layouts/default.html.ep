@@ -24,20 +24,20 @@
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Worlds<span class="caret"></span></a>
         <ul class="dropdown-menu">
-        % foreach my $world (@{stash ('msc_enabled_worlds')}) {
-        % if (stash ('msc_menu_active') eq $world) {
+          % foreach my $world (@{stash ('msc_enabled_worlds')}) {
+          % if (stash ('msc_menu_active') eq $world) {
           <li class="active"><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
-        % } else {
+          % } else {
           <li><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
-        % }
-        % }
-        % foreach my $world (@{stash ('msc_disabled_worlds')}) {
-        % if (stash ('msc_menu_active') eq $world) {
+          % }
+          % }
+          % foreach my $world (@{stash ('msc_disabled_worlds')}) {
+          % if (stash ('msc_menu_active') eq $world) {
           <li class="active"><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
-        % } else {
+          % } else {
           <li><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
-        % }
-        % }
+          % }
+          % }
         </ul>
       </li>
       <li><a href="#">Settings</a></li>
