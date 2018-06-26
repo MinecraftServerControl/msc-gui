@@ -30,10 +30,13 @@
         % } else {
           <li><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
         % }
-
         % }
         % foreach my $world (@{stash ('msc_disabled_worlds')}) {
+        % if (stash ('msc_menu_active') eq $world) {
+          <li class="active"><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
+        % } else {
           <li><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
+        % }
         % }
         </ul>
       </li>
