@@ -16,7 +16,8 @@
       <a class="navbar-brand" href="#">Minecraft Server Control</a>
     </div>
     <ul class="nav navbar-nav">
-      % if (stash ('msc_menu_active') eq 'dashboard') {
+      % my $menu_active = stash ('msc_menu_active') || '';
+      % if ($menu_active eq 'dashboard') {
       <li class="active"><a href="/">Dashboard</a></li>
       % } else {
       <li><a href="/">Dashboard</a></li>
@@ -25,14 +26,14 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Worlds<span class="caret"></span></a>
         <ul class="dropdown-menu">
           % foreach my $world (@{stash ('msc_enabled_worlds')}) {
-          % if (stash ('msc_menu_active') eq $world) {
+          % if ($menu_active eq $world) {
           <li class="active"><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
           % } else {
           <li><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
           % }
           % }
           % foreach my $world (@{stash ('msc_disabled_worlds')}) {
-          % if (stash ('msc_menu_active') eq $world) {
+          % if ($menu_active eq $world) {
           <li class="active"><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
           % } else {
           <li><a href="/worlds/<%= $world %>"><%= ucfirst $world %></a></li>
