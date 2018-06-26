@@ -38,7 +38,7 @@
         <a href="#"><img class="card-img-top" src="http://placehold.it/300x200" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="#"><%= ucfirst $world %></a>
+            <a href="/worlds/<%= $world %>"><%= ucfirst $world %></a>
             Disabled
           </h4>
           <p class="card-text"><br/><br/><br/></p>
