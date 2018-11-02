@@ -7,6 +7,7 @@
   * [Download](#download)
   * [Configuration](#configuration)
 * [Getting started guide](#getting-started-guide)
+* [Code of Conduct](CODE_OF_CONDUCT.md)
 * [License](LICENSE)
 * [Disclaimer](#disclaimer)
 
