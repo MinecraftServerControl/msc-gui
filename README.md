@@ -59,6 +59,10 @@ by running:
 
     sudo make install
 
+## Code of Conduct
+
+See [Code of Conduct](CODE_OF_CONDUCT.md)
+
 ## License
 
 See [LICENSE](LICENSE)
