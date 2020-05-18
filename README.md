@@ -7,6 +7,7 @@
   * [Download](#download)
   * [Configuration](#configuration)
 * [Getting started guide](#getting-started-guide)
+* [Code of Conduct](CODE_OF_CONDUCT.md)
 * [License](LICENSE)
 * [Disclaimer](#disclaimer)
 
@@ -57,6 +58,10 @@ can be done with the included Makefile in Debian and Ubuntu like environments
 by running:
 
     sudo make install
+
+## Code of Conduct
+
+See [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## License
 
