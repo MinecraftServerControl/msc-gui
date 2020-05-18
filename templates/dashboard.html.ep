@@ -1,32 +1,104 @@
 % layout 'default';
 
-% my $status = stash ('msc_status');
+<script type="text/javascript">
+
+  function ucfirst (s) {
+    return s.charAt (0).toUpperCase () + s.slice (1)
+  }
+
+  function formatnumber (x) {
+    return x.replace (/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function update (world) {
+    $.ajax ({
+      type: 'GET',
+      url: '/worlds/' + world + '.json',
+      dataType: 'json',
+      timeout: 30000,
+      success: function (data) {
+        if (JSON.stringify (data[world].running) == "true") {
+          // World is online.
+          $('#msc-world-running-' + world).html (
+            '<a href="/worlds/' + world + '">' +
+              ucfirst (world) +
+            '</a>: Online'
+          );
+          var memory = formatnumber (JSON.stringify (data[world].memory));
+          if (data[world].query.numplayers != undefined) {
+            // Query server is online. Display some stats.
+            var numplayers = JSON.stringify (data[world].query.numplayers);
+            var maxplayers = JSON.stringify (data[world].query.maxplayers);
+            var version = JSON.stringify (data[world].query.version);
+            $('#msc-world-status-' + world).html (
+              'Memory used (kB): ' + memory + '<br/>' +
+              'Players: ' + numplayers + '/' + maxplayers + '<br/>' +
+              'Version: ' + version + '<br/>'
+            );
+          } else {
+            // Query server is offline. Display what we can.
+            $('#msc-world-status-' + world).html (
+              'Memory used (kB): ' + memory + '<br/>' +
+              '<br/>&nbsp;'
+            );
+          }
+        }
+        else {
+          // World is offline.
+          $('#msc-world-running-' + world).html (
+            '<a href="/worlds/' + world + '">' +
+              ucfirst (world) +
+            '</a>: Offline'
+          );
+          $('#msc-world-status-' + world).html (
+            '<br/><br/>&nbsp;'
+          );
+        }
+        // Update world again in 60 seconds.
+        window.setTimeout (function () { update (world); }, 60000);
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        // Could not communicate with the server.
+        $('#msc-world-running-' + world).html (
+          '<a href="/worlds/' + world + '">' +
+            ucfirst (world) +
+          '</a>: Timed out'
+        );
+        $('#msc-world-status-' + world).html (
+          '<br/><br/>&nbsp;'
+        );
+        // Try to update world in 5 seconds.
+        window.setTimeout (function () { update (world); }, 5000);
+      }
+    });
+  }
+</script>
+
 <div class="container">
   <div class="row">
   % foreach my $world (@{stash ('msc_enabled_worlds')}) {
+    <script type="text/javascript">
+      $(function(){
+        $("#msc-world-running-<%= $world %>").html(
+          "<a href='/worlds/<%= $world %>'>" +
+            "<%= ucfirst $world %>" +
+          "</a>: Checking..."
+        );
+        $("#msc-world-status-<%= $world %>").html(
+          '<br/><br/>&nbsp;'
+        );
+        update ("<%= $world %>");
+      });
+    </script>
     <div class="col-lg-4 col-sm-6 portfolio-item">
       <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="http://placehold.it/300x200" alt=""></a>
+        <a href="#">
+          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+        </a>
         <div class="card-body">
-          <h4 class="card-title">
-            <a href="/worlds/<%= $world %>"><%= ucfirst $world %></a>
-            % if ($status->{$world}->{running}) {
-              Online
-            % }
-            % else {
-              Offline
-            % }
+          <h4 class="card-title" id="msc-world-running-<%= $world %>">
           </h4>
-          <p class="card-text">
-          % if (defined $status->{$world}->{query}->{version}) {
-            <%= $status->{$world}->{query}->{numplayers} %> / <%= $status->{$world}->{query}->{maxplayers} %> Players Online<br/>
-            Version <%= $status->{$world}->{query}->{version} %><br/>
-          % } else {
-            <br/><br/>
-          % }
-          % if ($status->{$world}->{running}) {
-            <%= reverse join ',', unpack '(A3)*', reverse $status->{$world}->{memory} %> kB Memory Used
-          % }
+          <p class="card-text" id="msc-world-status-<%= $world %>">
           </p>
         </div>
       </div>
@@ -35,10 +107,12 @@
   % foreach my $world (@{stash ('msc_disabled_worlds')}) {
     <div class="col-lg-4 col-sm-6 portfolio-item">
       <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="http://placehold.it/300x200" alt=""></a>
+        <a href="#">
+          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+        </a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="/worlds/<%= $world %>"><%= ucfirst $world %></a>
+            <a href="/worlds/<%= $world %>"><%= ucfirst $world %></a>:
             Disabled
           </h4>
           <p class="card-text"><br/><br/><br/></p>

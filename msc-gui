@@ -82,11 +82,9 @@ get '/' => sub {
   my $self = shift;
   my @enabled = &getEnabledWorlds;
   my @disabled = &getDisabledWorlds;
-  my $status = decode_json mscs ("status-json");
   $self->stash (title => "MSC GUI: Dashboard");
   $self->stash (msc_enabled_worlds => \@enabled);
   $self->stash (msc_disabled_worlds => \@disabled);
-  $self->stash (msc_status => $status);
   $self->stash (msc_menu_active => 'dashboard');
   $self->render (template => "dashboard");
 };
