@@ -39,7 +39,7 @@
             // Query server is offline. Display what we can.
             $('#msc-world-status-' + world).html (
               'Memory used (kB): ' + memory + '<br/>' +
-              '<br/>&nbsp;'
+              '<br/><br/>'
             );
           }
         }
@@ -51,7 +51,7 @@
             '</a>: Offline'
           );
           $('#msc-world-status-' + world).html (
-            '<br/><br/>&nbsp;'
+            '<br/><br/><br/>'
           );
         }
         // Update world again in 60 seconds.
@@ -65,7 +65,7 @@
           '</a>: Timed out'
         );
         $('#msc-world-status-' + world).html (
-          '<br/><br/>&nbsp;'
+          '<br/><br/><br/>'
         );
         // Try to update world in 5 seconds.
         window.setTimeout (function () { update (world); }, 5000);
@@ -97,8 +97,11 @@
         </a>
         <div class="card-body">
           <h4 class="card-title" id="msc-world-running-<%= $world %>">
+            <a href="/worlds/<%= $world %>"><%= ucfirst $world %></a>:
+            Enabled
           </h4>
           <p class="card-text" id="msc-world-status-<%= $world %>">
+            <br/><br/><br/>
           </p>
         </div>
       </div>
