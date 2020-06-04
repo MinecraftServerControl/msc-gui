@@ -6,6 +6,8 @@
 
 =head1 SYNOPSIS
 
+  Minecraft Server Control GUI (MSC-GUI) is a web-based interface to the
+  Minecraft Server Control Script.
 
 =head1 DESCRIPTION
 
@@ -26,7 +28,7 @@
 
 =head1 AUTHOR - Jason Wood
 
-  Email sandain-at-hotmail.com
+  Email sandain@hotmail.com
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -82,7 +84,6 @@ helper 'mscs' => sub {
   my $self = shift;
   return `mscs @_`;
 };
-
 
 =head3 getEnabledWorlds
 
