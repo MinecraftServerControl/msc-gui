@@ -1,2 +1,1 @@
-% use Mojo::JSON qw (to_json);
-%== to_json stash ('msc_status');
+%== mscs ("status-json $world");
