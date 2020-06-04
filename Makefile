@@ -1,5 +1,6 @@
 MSC_USER := minecraft
 MSC_GROUP := minecraft
+MSC_MAPS := /opt/mscs/maps
 MSC_GUI_HOME := /opt/mscs/gui
 MSC_GUI_SERVICE := /etc/systemd/system/msc-gui.service
 
@@ -14,6 +15,7 @@ update:
 	install -m 0644 msc-gui.service $(MSC_GUI_SERVICE);
 	cp -R public $(MSC_GUI_HOME)
 	cp -R templates $(MSC_GUI_HOME)
+	ln -sf $(MSC_MAPS) $(MSC_GUI_HOME)/public/maps
 
 clean:
 	systemctl -f disable msc-gui.service;
