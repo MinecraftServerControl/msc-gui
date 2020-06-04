@@ -8,6 +8,17 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    body { background-color: #222222; }
+    .navbar-inverse { background-color: #375a7f; }
+    .navbar-brand { color: #ffffff; font-weight: bold; }
+    .active { background-color: #28415b; }
+    .card { background-color: #303030; }
+    .card-img-top { background-color: #cccccc; display: block; margin-left: auto; margin-right: auto; }
+    .card-title { display: block; margin-left: auto; margin-right: auto; }
+    .card-body { background-color: #464545; color: #ffffff; }
+    .list-group-item { background-color: #303030; }
+  </style>
 </head>
 <body>
  <nav class="navbar navbar-inverse">
@@ -42,9 +53,9 @@
         </ul>
       </li>
       % if ($menu_active eq 'settings') {
-      <li class="active"><a href="/settings">Settings</a></li>
+      <li class="active"><a href="/settings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
       % } else {
-      <li><a href="/settings">Settings</a></li>
+      <li><a href="/settings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
       % }
     </ul>
   </div>
