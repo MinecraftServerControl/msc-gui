@@ -1,6 +1,8 @@
 % layout 'default';
 
-% my $status = stash ('msc_status');
+% use Mojo::JSON qw(decode_json);
+
+% my $status = decode_json mscs ("status-json $world");
 % my @players = ();
 % if (defined $status->{$world}->{query}->{players}) {
 %   @players = @{$status->{$world}->{query}->{players}};
@@ -30,6 +32,6 @@ Host IP: <%= $status->{$world}->{query}->{hostip} %>
 Player list: <%= join ',', @players %>
 </pre>
 
-<a href="http://localhost/maps/<%= $world %>/index.html">
-<img id="map" src="http://localhost/maps/<%= $world %>/normalrender/base.png" alt="Map of <%= $world %>"/>
+<a href="/maps/<%= $world %>/index.html">
+<img id="map" src="/maps/<%= $world %>/overworld-render/base.png" alt="Map of <%= $world %>"/>
 </a>
