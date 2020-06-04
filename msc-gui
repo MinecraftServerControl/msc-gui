@@ -70,6 +70,54 @@ use Mojolicious::Lite;
 use Mojo::ByteStream;
 use Mojo::JSON qw(decode_json);
 
+=head2 Helper Functions
+
+=head3 mscs
+
+  Run the mscs command and return the output.
+
+=cut
+
+helper 'mscs' => sub {
+  my $self = shift;
+  return `mscs @_`;
+};
+
+
+=head3 getEnabledWorlds
+
+  Returns a list of enabled worlds.
+
+=cut
+
+helper 'getEnabledWorlds' => sub {
+  my $self = shift;
+  my @worlds;
+  foreach my $line ($self->mscs ("ls enabled")) {
+    if ($line =~ /^\s*(\w+):/) {
+      push @worlds, $1;
+    }
+  }
+  return @worlds;
+};
+
+=head3 getDisabledWorlds
+
+  Returns a list of disabled worlds.
+
+=cut
+
+helper 'getDisabledWorlds' => sub {
+  my $self = shift;
+  my @worlds;
+  foreach my $line ($self->mscs ("ls disabled")) {
+    if ($line =~ /^\s*(\w+):/) {
+      push @worlds, $1;
+    }
+  }
+  return @worlds;
+};
+
 =head2 HTTP Request Methods
 
 =head3 get /
@@ -80,8 +128,8 @@ use Mojo::JSON qw(decode_json);
 
 get '/' => sub {
   my $self = shift;
-  my @enabled = &getEnabledWorlds;
-  my @disabled = &getDisabledWorlds;
+  my @enabled = $self->getEnabledWorlds;
+  my @disabled = $self->getDisabledWorlds;
   $self->stash (title => "MSC GUI: Dashboard");
   $self->stash (msc_enabled_worlds => \@enabled);
   $self->stash (msc_disabled_worlds => \@disabled);
@@ -96,8 +144,8 @@ get '/' => sub {
 get '/settings' => sub {
   my $self = shift;
   $self->stash (title => "MSC GUI: Settings");
-  $self->stash (msc_enabled_worlds => [ &getEnabledWorlds ]);
-  $self->stash (msc_disabled_worlds => [ &getDisabledWorlds ]);
+  $self->stash (msc_enabled_worlds => [ $self->getEnabledWorlds ]);
+  $self->stash (msc_disabled_worlds => [ $self->getDisabledWorlds ]);
   $self->stash (msc_menu_active => 'settings');
   $self->render (template => "settings");
 };
@@ -111,8 +159,8 @@ get '/settings' => sub {
 get '/worlds' => sub {
   my $self = shift;
   $self->stash (title => "MSC GUI: World List");
-  $self->stash (msc_enabled_worlds => [ &getEnabledWorlds ]);
-  $self->stash (msc_disabled_worlds => [ &getDisabledWorlds ]);
+  $self->stash (msc_enabled_worlds => [ $self->getEnabledWorlds ]);
+  $self->stash (msc_disabled_worlds => [ $self->getDisabledWorlds ]);
   $self->render (template => "worlds");
 };
 
@@ -125,15 +173,15 @@ get '/worlds' => sub {
 get '/worlds/:world' => sub {
   my $self = shift;
   my $world = $self->stash ('world');
-  my $status = decode_json mscs ("status-json $world");
+  my $status = decode_json $self->mscs ("status-json $world");
   $self->stash (title => "MSC GUI: $world");
-  $self->stash (msc_enabled_worlds => [ &getEnabledWorlds ]);
-  $self->stash (msc_disabled_worlds => [ &getDisabledWorlds ]);
+  $self->stash (msc_enabled_worlds => [ $self->getEnabledWorlds ]);
+  $self->stash (msc_disabled_worlds => [ $self->getDisabledWorlds ]);
   $self->stash (msc_menu_active => $world);
   $self->stash (msc_status      => $status);
-  my %enabledWorlds = map { $_ => 1 } &getEnabledWorlds;
+  my %enabledWorlds = map { $_ => 1 } $self->getEnabledWorlds;
   if (defined $enabledWorlds{$world}) {
-    my $backups = mscs ("list-backups", $world);
+    my $backups = $self->mscs ("list-backups", $world);
     $self->stash (msc_backup_list => $backups);
     $self->render (template => "enabled-world");
   }
@@ -144,50 +192,3 @@ get '/worlds/:world' => sub {
 
 # Start the MSC-GUI app.
 app->start;
-
-=head2 Internal Methods
-
-=head3 getEnabledWorlds
-
-  Returns a list of enabled worlds.
-
-=cut
-
-sub getEnabledWorlds {
-  my $self = shift;
-  my @worlds;
-  foreach my $line (mscs ("ls enabled")) {
-    if ($line =~ /^\s*(\w+):/) {
-      push @worlds, $1;
-    }
-  }
-  return @worlds;
-}
-
-=head3 getDisabledWorlds
-
-  Returns a list of disabled worlds.
-
-=cut
-
-sub getDisabledWorlds {
-  my $self = shift;
-  my @worlds;
-  foreach my $line (mscs ("ls disabled")) {
-    if ($line =~ /^\s*(\w+):/) {
-      push @worlds, $1;
-    }
-  }
-  return @worlds;
-}
-
-=head3 mscs
-
-  Run the mscs command and return the output.
-
-=cut
-
-sub mscs {
-  return `mscs @_`;
-}
-
