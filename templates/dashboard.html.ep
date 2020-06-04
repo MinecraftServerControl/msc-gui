@@ -110,7 +110,7 @@
     <div class="col-lg-4 col-sm-6 portfolio-item">
       <div class="card h-100">
         <a href="/maps/<%= $world %>/index.html">
-          <img src="/maps/<%= $world %>/overworld-render/base.png" width="200" height="200" class="card-img-top" onerror="this.src='http://placehold.it/200x200'" alt="Map of world: <%= $world %>"/>
+          <img src="/maps/<%= $world %>/overworld-render/base.png" width="200" height="200" class="card-img-top" onerror="this.src='/msc.png'" alt="Map of world: <%= $world %>"/>
         </a>
         <div class="card-body">
           <h4 class="card-title" id="msc-world-running-<%= $world %>">
