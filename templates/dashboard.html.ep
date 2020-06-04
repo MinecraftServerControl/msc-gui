@@ -17,30 +17,47 @@
       dataType: 'json',
       timeout: 30000,
       success: function (data) {
-        if (JSON.stringify (data[world].running) == "true") {
+        if (JSON.stringify (data[world].running) === "true") {
           // World is online.
           $('#msc-world-running-' + world).html (
             '<a href="/worlds/' + world + '">' +
               ucfirst (world) +
             '</a>: Online'
           );
-          var memory = formatnumber (JSON.stringify (data[world].memory));
+          var memory = JSON.stringify (data[world].memory);
+          memory = Math.round (memory / 1024);
           if (data[world].query.numplayers != undefined) {
             // Query server is online. Display some stats.
             var numplayers = JSON.stringify (data[world].query.numplayers);
             var maxplayers = JSON.stringify (data[world].query.maxplayers);
             var version = JSON.stringify (data[world].query.version);
-            $('#msc-world-status-' + world).html (
-              'Memory used (kB): ' + memory + '<br/>' +
-              'Players: ' + numplayers + '/' + maxplayers + '<br/>' +
-              'Version: ' + version + '<br/>'
+            if (version.charAt (0) === '"') {
+              version = version.substr (1, version.length - 1);
+            }
+            if (version.charAt (version.length - 1) === '"') {
+              version = version.substr (0, version.length - 1);
+            }
+            $('#msc-world-status-01-' + world).html (
+              '<span class="glyphicon glyphicon-tasks"></span>&nbsp;' +
+              formatnumber (memory.toString ()) + ' MB Memory Used'
+            );
+            $('#msc-world-status-02-' + world).html (
+              '<span class="glyphicon glyphicon-user"></span>&nbsp;' +
+              numplayers + '/' + maxplayers + ' Players Online'
+            );
+            $('#msc-world-status-03-' + world).html (
+              '<span class="glyphicon glyphicon-info-sign"></span>&nbsp;' +
+              'Version ' + version
             );
           } else {
             // Query server is offline. Display what we can.
-            $('#msc-world-status-' + world).html (
-              'Memory used (kB): ' + memory + '<br/>' +
-              '<br/><br/>'
+            $('#msc-world-status-01-' + world).html (
+              '<span class="glyphicon glyphicon-tasks"></span>&nbsp;' +
+              '</svg>' + '&nbsp;' +
+              formatnumber (memory.toString ()) + ' MB Memory Used'
             );
+            $('#msc-world-status-02-' + world).html ("&nbsp;");
+            $('#msc-world-status-03-' + world).html ("&nbsp;");
           }
         }
         else {
@@ -50,9 +67,9 @@
               ucfirst (world) +
             '</a>: Offline'
           );
-          $('#msc-world-status-' + world).html (
-            '<br/><br/><br/>'
-          );
+          $('#msc-world-status-01-' + world).html ("&nbsp;");
+          $('#msc-world-status-02-' + world).html ("&nbsp;");
+          $('#msc-world-status-03-' + world).html ("&nbsp;");
         }
         // Update world again in 60 seconds.
         window.setTimeout (function () { update (world); }, 60000);
@@ -64,9 +81,9 @@
             ucfirst (world) +
           '</a>: Timed out'
         );
-        $('#msc-world-status-' + world).html (
-          '<br/><br/><br/>'
-        );
+        $('#msc-world-status-01-' + world).html ("&nbsp;");
+        $('#msc-world-status-02-' + world).html ("&nbsp;");
+        $('#msc-world-status-03-' + world).html ("&nbsp;");
         // Try to update world in 5 seconds.
         window.setTimeout (function () { update (world); }, 5000);
       }
@@ -84,25 +101,27 @@
             "<%= ucfirst $world %>" +
           "</a>: Checking..."
         );
-        $("#msc-world-status-<%= $world %>").html(
-          '<br/><br/>&nbsp;'
-        );
+        $("#msc-world-status-01-<%= $world %>").html ("&nbsp;");
+        $("#msc-world-status-02-<%= $world %>").html ("&nbsp;");
+        $("#msc-world-status-03-<%= $world %>").html ("&nbsp;");
         update ("<%= $world %>");
       });
     </script>
     <div class="col-lg-4 col-sm-6 portfolio-item">
       <div class="card h-100">
-        <a href="#">
-          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+        <a href="/maps/<%= $world %>/index.html">
+          <img src="/maps/<%= $world %>/overworld-render/base.png" width="200" height="200" class="card-img-top" onerror="this.src='http://placehold.it/200x200'" alt="Map of world: <%= $world %>"/>
         </a>
         <div class="card-body">
           <h4 class="card-title" id="msc-world-running-<%= $world %>">
             <a href="/worlds/<%= $world %>"><%= ucfirst $world %></a>:
             Enabled
           </h4>
-          <p class="card-text" id="msc-world-status-<%= $world %>">
-            <br/><br/><br/>
-          </p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" id="msc-world-status-01-<%= $world %>">&nbsp;</li>
+            <li class="list-group-item" id="msc-world-status-02-<%= $world %>">&nbsp;</li>
+            <li class="list-group-item" id="msc-world-status-03-<%= $world %>">&nbsp;</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -111,14 +130,18 @@
     <div class="col-lg-4 col-sm-6 portfolio-item">
       <div class="card h-100">
         <a href="#">
-          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+          <img src="/maps/<%= $world %>/overworld-render/base.png" width="200" height="200" class="card-img-top" onerror="this.src='http://placehold.it/200x200'" alt="Map of world: <%= $world %>"/>
         </a>
         <div class="card-body">
           <h4 class="card-title">
             <a href="/worlds/<%= $world %>"><%= ucfirst $world %></a>:
             Disabled
           </h4>
-          <p class="card-text"><br/><br/><br/></p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" id="msc-world-status-01-<%= $world %>">&nbsp;</li>
+            <li class="list-group-item" id="msc-world-status-02-<%= $world %>">&nbsp;</li>
+            <li class="list-group-item" id="msc-world-status-03-<%= $world %>">&nbsp;</li>
+          </ul>
         </div>
       </div>
     </div>
